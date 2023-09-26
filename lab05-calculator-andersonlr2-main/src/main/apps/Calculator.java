@@ -47,7 +47,12 @@ public class Calculator{
     }
 
     private void inititalizeInputs(){
-
+        JPanel numPanel = new JPanel();
+        JTextField leftOperand = new JTextField(5);
+        JTextField rightOperand = new JTextField(5);
+        numPanel.add(leftOperand);
+        numPanel.add(rightOperand);
+        frame.add(numPanel,BorderLayout.CENTER);
     }
 
     private void initializeResults(){
@@ -55,15 +60,18 @@ public class Calculator{
     }
 
     private void initializeButtons(){
-
+        JButton addButton = new JButton("ADD");
+        JButton subButton = new JButton("SUB");
+        JButton multButton = new JButton("MULT");
+        JButton divButton = new JButton("DIV");
     }
 
     private double getLeftNum(){
-
+        return 1.0;
     }
 
     private double getRightNum(){
-
+        return 1.0;
     }
 
     private void updateResult(double result){
