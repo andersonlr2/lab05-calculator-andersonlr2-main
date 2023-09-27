@@ -33,7 +33,8 @@ public class Calculator{
         initializeComponents();
         displayFrame();
     }
-
+    
+    /**@return returns the frame */
     public JFrame getFrame(){
         return this.frame;
     }
