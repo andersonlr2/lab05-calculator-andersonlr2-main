@@ -1,6 +1,15 @@
 package apps;
 
+/**
+ * @author Leah Anderson
+ * @verison Sept 26, 2023
+ */
+
 import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,7 +53,7 @@ public class Calculator{
     }
 
     private void displayFrame(){
-        //frame.pack();
+        frame.pack();
         frame.setVisible(true);
     }
 
@@ -101,6 +110,7 @@ public class Calculator{
         frame.add(buttons, BorderLayout.CENTER);
     }
 
+    /**@return double returns the left number */
     private double getLeftNum(){
         double leftNum;
         String leftInput = leftOpField.getText();
@@ -115,7 +125,8 @@ public class Calculator{
         }
         return Double.NaN;
     }
-
+ 
+    /**@return double returns the left number */
     private double getRightNum(){
         double rightNum;
         String rightInput = rightOpField.getText();
@@ -131,6 +142,7 @@ public class Calculator{
         return Double.NaN;
     }
 
+    /**@param result the result of previous math */
     private void updateResult(double result){
         if (((Double)result).isNaN()){
             this.resultLabel.setText(RESULT_PREAMBLE + ERROR_MESSAGE);
