@@ -1,14 +1,16 @@
-package main.apps;
+package apps;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Calculator{
 
     private static final int X_LOC = 100;
     private static final int Y_LOC = 100;
-    private static final int WIDTH = 400;
-    private static final int HEIGHT = 400;
+    private static final int WIDTH = 300;
+    private static final int HEIGHT = 150;
     private static final String NAME = "Calculator";
     private static final String RESULT_PREAMBLE = "Result = ";
     private static final String ERROR_MESSAGE = "Error";
@@ -42,20 +44,24 @@ public class Calculator{
     }
 
     private void displayFrame(){
-        frame.pack();
+        //frame.pack();
         frame.setVisible(true);
     }
 
     private void inititalizeInputs(){
         JPanel numPanel = new JPanel();
-        JTextField leftOperand = new JTextField(5);
-        JTextField rightOperand = new JTextField(5);
-        numPanel.add(leftOperand);
-        numPanel.add(rightOperand);
-        frame.add(numPanel,BorderLayout.CENTER);
+        leftOpField = new JTextField(5);
+        rightOpField = new JTextField(5);
+        numPanel.add(leftOpField, BorderLayout.LINE_START);
+        numPanel.add(rightOpField,BorderLayout.CENTER);
+        frame.add(numPanel, BorderLayout.NORTH);
     }
 
     private void initializeResults(){
+        JPanel resultPanel = new JPanel();
+        this.resultLabel = new JLabel(RESULT_PREAMBLE);
+        resultPanel.add(resultLabel);
+        frame.add(resultPanel, BorderLayout.SOUTH);
 
     }
 
@@ -64,18 +70,78 @@ public class Calculator{
         JButton subButton = new JButton("SUB");
         JButton multButton = new JButton("MULT");
         JButton divButton = new JButton("DIV");
+        addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                updateResult(getLeftNum()+getRightNum());
+            }
+        });
+        subButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                updateResult(getLeftNum()-getRightNum());
+            }
+        });
+        multButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                updateResult(getLeftNum()*getRightNum());
+            }
+        });
+        divButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                if (getRightNum() == 0){
+                    updateResult(Double.NaN);
+                }
+                else{
+                    updateResult(getLeftNum()/getRightNum());
+                }
+            }
+        });
+        JPanel buttons = new JPanel();
+        buttons.add(addButton); buttons.add(subButton); 
+        buttons.add(multButton); buttons.add(divButton);
+        frame.add(buttons, BorderLayout.CENTER);
     }
 
     private double getLeftNum(){
-        return 1.0;
+        double leftNum;
+        String leftInput = leftOpField.getText();
+        if(!leftInput.trim().equals("")){
+            try{
+                leftNum = Double.parseDouble(leftInput);
+                return leftNum;
+            }
+            catch(Exception e){
+                return Double.NaN;
+            }
+        }
+        return Double.NaN;
     }
 
     private double getRightNum(){
-        return 1.0;
+        double rightNum;
+        String rightInput = rightOpField.getText();
+        if(!rightInput.trim().equals("")){
+            try{
+                rightNum = Double.parseDouble(rightInput);
+                return rightNum;
+            }
+            catch(Exception e){
+                return Double.NaN;
+            }
+        }
+        return Double.NaN;
     }
 
     private void updateResult(double result){
+        if (((Double)result).isNaN()){
+            this.resultLabel.setText(RESULT_PREAMBLE + ERROR_MESSAGE);
+        }
+        else{
+            this.resultLabel.setText(RESULT_PREAMBLE + result);
+        }
+    }
 
+    public static void main(String args[]){
+        new Calculator();
     }
 
 }
